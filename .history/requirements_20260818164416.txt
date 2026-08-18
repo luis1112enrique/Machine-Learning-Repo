@@ -1,0 +1,10 @@
+pandas
+polars
+numpy
+matplotlib
+seaborn
+plotly
+altair
+requests
+scikit-learn
+jupyter
