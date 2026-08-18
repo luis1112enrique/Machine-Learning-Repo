@@ -1,0 +1,55 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Local data files and generated datasets
+*.csv
+*.tsv
+*.parquet
+*.feather
+*.sqlite
+*.db
+*.csv.gz
+data/raw/
+data/processed/
+
+# Keep curated sample datasets if they are added later
+!data/sample/
+!data/sample/*.csv
+!data/sample/*.tsv
+
+# Generated reports, exports and figures
+outputs/
+reports/
+figures/
+*.html
+*.pdf
+
+# Environment variables and local configuration
+.env
+.env.*
+!.env.example
+
+# macOS and editor files
+.DS_Store
+._*
+.vscode/
+.idea/
+
+# Logs
+*.log
