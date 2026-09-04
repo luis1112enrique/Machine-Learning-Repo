@@ -13,6 +13,7 @@ El repositorio está organizado por clases. Cada notebook trabaja un caso distin
 | `Clase 3 - Metrics classification.ipynb` | Clasificación | Evaluación de modelos de clasificación usando el dataset Breast Cancer Wisconsin de `scikit-learn`. Incluye matriz de confusión, accuracy y análisis de desbalance con datos sintéticos de fraude. |
 | `Clase 4 - Mean Squared error (MSE).ipynb` | Regresión | Comparación de modelos de regresión usando el dataset Diabetes de `scikit-learn`. Calcula MSE, MAE, RMSE y R² para Linear Regression, Ridge, Lasso, Decision Tree y Random Forest. |
 | `Clase 5 - Calidad del aire CDMX.ipynb` | ETL y estadística descriptiva | Flujo de ingesta, limpieza, control de calidad, imputación ligera, feature engineering temporal y visualización de contaminantes atmosféricos en CDMX para 2024, 2025 y 2026. |
+| `Clase 6 - Meteorología.ipynb` | Probabilidad y estadística | Análisis de datos meteorológicos de CDMX para 2025. Filtra la estación `BJU` y calcula probabilidades empíricas, conjuntas y condicionales para humedad relativa y velocidad del viento. |
 
 ## Objetivos Del Repositorio
 
@@ -20,6 +21,7 @@ El repositorio está organizado por clases. Cada notebook trabaja un caso distin
 - Construir pipelines básicos de ETL: ingesta, limpieza, transformación y validación.
 - Crear variables útiles para análisis estadístico y modelos predictivos.
 - Evaluar modelos de clasificación y regresión con métricas adecuadas.
+- Calcular probabilidades empíricas, conjuntas y condicionales a partir de datos observados.
 - Documentar supuestos, fuentes de datos y decisiones de limpieza.
 
 ## Tecnologías
@@ -43,6 +45,7 @@ Las dependencias principales están listadas en `requirements.txt`.
 - **Airbnb CDMX:** datos públicos de Inside Airbnb cargados desde el notebook.
 - **ECOBICI CDMX:** datos públicos de viajes de ECOBICI.
 - **Calidad del aire CDMX:** archivos locales de contaminantes atmosféricos del sistema de monitoreo de la Ciudad de México.
+- **Meteorología CDMX:** archivo local de variables meteorológicas del sistema de monitoreo de la Ciudad de México.
 - **Breast Cancer Wisconsin:** dataset incluido en `scikit-learn`, usado para métricas de clasificación.
 - **Diabetes:** dataset incluido en `scikit-learn`, usado para métricas de regresión.
 - **Fraude sintético:** dataset generado con `make_classification` de `scikit-learn` para ilustrar problemas de desbalance de clases.
@@ -62,8 +65,9 @@ Archivos usados localmente:
 | `calidad_aire_long_limpio.csv` | Clase 5 | Dataset limpio en formato largo, generado por el ETL. |
 | `calidad_aire_wide_features.csv` | Clase 5 | Dataset transformado a formato ancho con variables temporales. |
 | `calidad_aire_model_ready.csv` | Clase 5 | Dataset preparado para modelado predictivo. |
+| `meteorología_2025.csv` | Clase 6 | Datos meteorológicos de CDMX 2025 en formato largo. |
 
-Nota para la Clase 5: los archivos `contaminantes_2024.csv`, `contaminantes_2025.csv` y `contaminantes_2026.csv` contienen 9 filas de metadatos antes del encabezado real. Por eso se cargan con `skiprows=9`.
+Nota para las Clases 5 y 6: los archivos crudos contienen 9 filas de metadatos antes del encabezado real. Por eso se cargan con `skiprows=9`.
 
 ## Clase 5: Calidad Del Aire CDMX
 
@@ -81,6 +85,28 @@ El notebook de calidad del aire trabaja un flujo ETL completo:
 10. Split temporal entre entrenamiento y prueba.
 11. Cálculo de medidas de tendencia central: media, mediana y moda.
 12. Visualización de distribuciones por año y por contaminante.
+
+## Clase 6: Meteorología
+
+El notebook de meteorología trabaja con datos horarios de la Ciudad de México durante 2025. El análisis se enfoca en la estación `BJU` y en dos parámetros:
+
+- `RH`: humedad relativa.
+- `WSP`: velocidad del viento.
+
+Los eventos definidos para el análisis son:
+
+- Humedad alta: `RH >= 70`.
+- Viento tranquilo: `WSP <= 1`.
+
+El análisis estadístico calcula:
+
+1. Probabilidad empírica de humedad alta: `P(RH >= 70)`.
+2. Probabilidad empírica de viento tranquilo: `P(WSP <= 1)`.
+3. Probabilidad conjunta: `P(RH >= 70 y WSP <= 1)`.
+4. Probabilidad condicional de humedad alta dado viento tranquilo: `P(RH >= 70 | WSP <= 1)`.
+5. Probabilidad condicional de viento tranquilo dado humedad alta: `P(WSP <= 1 | RH >= 70)`.
+
+Para comparar humedad y viento en la misma hora, el dataset se transforma de formato largo a formato ancho usando `pivot_table`, con `date` como índice y `id_parameter` como columnas.
 
 ## Instalación
 
@@ -132,6 +158,7 @@ Ejecuta los notebooks en orden sugerido:
 3. `Clase 3 - Metrics classification.ipynb`
 4. `Clase 4 - Mean Squared error (MSE).ipynb`
 5. `Clase 5 - Calidad del aire CDMX.ipynb`
+6. `Clase 6 - Meteorología.ipynb`
 
 Algunos notebooks descargan información desde internet o procesan archivos grandes. La ejecución puede tardar varios minutos dependiendo del tamaño de los datos y del equipo.
 
@@ -143,6 +170,12 @@ contaminantes_2025.csv
 contaminantes_2026.csv
 ```
 
+Para la Clase 6, verifica que el archivo meteorológico esté en la raíz del repositorio:
+
+```text
+meteorología_2025.csv
+```
+
 ## Estructura Del Proyecto
 
 ```text
@@ -152,6 +185,7 @@ contaminantes_2026.csv
 ├── Clase 3 - Metrics classification.ipynb
 ├── Clase 4 - Mean Squared error (MSE).ipynb
 ├── Clase 5 - Calidad del aire CDMX.ipynb
+├── Clase 6 - Meteorología.ipynb
 ├── requirements.txt
 ├── .gitignore
 └── README.md
@@ -172,6 +206,7 @@ Los archivos `.csv` no aparecen en la estructura porque se mantienen fuera del c
 
 - Clases 1 a 4: notebooks de análisis, ETL y evaluación de modelos.
 - Clase 5: notebook activo de calidad del aire con ETL, estadística descriptiva y gráficas de distribución.
+- Clase 6: notebook de meteorología enfocado en probabilidades empíricas, conjuntas y condicionales para la estación `BJU`.
 - Datasets grandes: disponibles localmente, pero excluidos del repositorio mediante `.gitignore`.
 
 ## Autor
