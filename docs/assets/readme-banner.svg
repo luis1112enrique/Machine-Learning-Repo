@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">De los datos al conocimiento</title>
+  <desc id="desc">Portada de Statistics for Data Science con una serie temporal, una distribución y una nube de puntos en tonos azul, turquesa y violeta.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1280" y2="360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="1" stop-color="#172554"/>
+    </linearGradient>
+    <linearGradient id="area" x1="0" y1="108" x2="0" y2="236" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2DD4BF" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#2DD4BF" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#93C5FD" fill-opacity="0.12"/>
+    </pattern>
+  </defs>
+  <rect width="1280" height="360" rx="24" fill="url(#background)"/>
+  <rect x="650" y="0" width="630" height="360" rx="24" fill="url(#grid)"/>
+  <path d="M670 0L570 360" stroke="#93C5FD" stroke-opacity="0.08"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif">
+    <rect x="52" y="46" width="282" height="30" rx="15" fill="#2DD4BF" fill-opacity="0.12" stroke="#2DD4BF" stroke-opacity="0.3"/>
+    <circle cx="69" cy="61" r="4" fill="#5EEAD4"/>
+    <text x="82" y="66" fill="#99F6E4" font-size="12" font-weight="600" letter-spacing="1.6">STATISTICS FOR DATA SCIENCE</text>
+    <text x="52" y="140" fill="#F8FAFC" font-size="51" font-weight="700" letter-spacing="-1.5">De los datos</text>
+    <text x="52" y="199" fill="#5EEAD4" font-size="51" font-weight="700" letter-spacing="-1.5">al conocimiento.</text>
+    <text x="54" y="239" fill="#CBD5E1" font-size="18">Estadística aplicada y machine learning con Python.</text>
+    <path d="M54 271H568" stroke="#94A3B8" stroke-opacity="0.2"/>
+    <text x="54" y="304" fill="#E2E8F0" font-size="13" font-weight="600" letter-spacing="1.6">EXPLORAR</text>
+    <circle cx="177" cy="299" r="2" fill="#5EEAD4"/>
+    <text x="202" y="304" fill="#E2E8F0" font-size="13" font-weight="600" letter-spacing="1.6">MODELAR</text>
+    <circle cx="323" cy="299" r="2" fill="#A78BFA"/>
+    <text x="348" y="304" fill="#E2E8F0" font-size="13" font-weight="600" letter-spacing="1.6">INTERPRETAR</text>
+    <rect x="694" y="40" width="534" height="150" rx="16" fill="#0F172A" fill-opacity="0.7" stroke="#334155"/>
+    <text x="716" y="68" fill="#CBD5E1" font-size="11" font-weight="600" letter-spacing="1.5">SERIES DE TIEMPO</text>
+    <circle cx="1203" cy="63" r="4" fill="#2DD4BF"/>
+    <path d="M716 97H1204M716 127H1204M716 157H1204" stroke="#334155" stroke-opacity="0.6"/>
+    <path d="M716 162L744 150L772 157L800 124L828 139L856 115L884 132L912 109L940 123L968 93L996 113L1024 88L1052 102L1080 79L1108 93L1136 72L1164 87L1204 64V178H716Z" fill="url(#area)"/>
+    <path d="M716 162L744 150L772 157L800 124L828 139L856 115L884 132L912 109L940 123L968 93L996 113L1024 88L1052 102L1080 79L1108 93L1136 72L1164 87L1204 64" stroke="#5EEAD4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="694" y="206" width="258" height="114" rx="16" fill="#0F172A" fill-opacity="0.7" stroke="#334155"/>
+    <text x="716" y="233" fill="#CBD5E1" font-size="11" font-weight="600" letter-spacing="1.5">DISTRIBUCIONES</text>
+    <path d="M716 298H930" stroke="#334155"/>
+    <g fill="#A78BFA">
+      <rect x="724" y="285" width="18" height="13" rx="3" opacity="0.4"/>
+      <rect x="751" y="273" width="18" height="25" rx="3" opacity="0.55"/>
+      <rect x="778" y="255" width="18" height="43" rx="3" opacity="0.75"/>
+      <rect x="805" y="245" width="18" height="53" rx="3"/>
+      <rect x="832" y="255" width="18" height="43" rx="3" opacity="0.75"/>
+      <rect x="859" y="274" width="18" height="24" rx="3" opacity="0.55"/>
+      <rect x="886" y="286" width="18" height="12" rx="3" opacity="0.4"/>
+    </g>
+    <rect x="970" y="206" width="258" height="114" rx="16" fill="#0F172A" fill-opacity="0.7" stroke="#334155"/>
+    <text x="992" y="233" fill="#CBD5E1" font-size="11" font-weight="600" letter-spacing="1.5">RELACIONES</text>
+    <path d="M992 298H1204" stroke="#334155"/>
+    <path d="M1003 294L1195 250" stroke="#60A5FA" stroke-opacity="0.45" stroke-width="2" stroke-dasharray="5 5"/>
+    <g fill="#60A5FA">
+      <circle cx="1008" cy="286" r="4"/><circle cx="1029" cy="291" r="4"/>
+      <circle cx="1048" cy="273" r="4"/><circle cx="1068" cy="280" r="4"/>
+      <circle cx="1088" cy="266" r="4"/><circle cx="1107" cy="275" r="4"/>
+      <circle cx="1129" cy="254" r="4"/><circle cx="1150" cy="267" r="4"/>
+      <circle cx="1171" cy="249" r="4"/><circle cx="1193" cy="255" r="4"/>
+    </g>
+  </g>
+</svg>
