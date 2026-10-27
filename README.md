@@ -6,17 +6,19 @@
 
 <p align="center">
   Un recorrido práctico por el análisis de datos, la estadística y el modelado con Python.<br>
-  <strong>Datos reales · Notebooks explicados · Análisis reproducible</strong>
+  <strong>Datos reales · Notebooks explicados · De la estadística a las redes neuronales</strong>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&amp;logo=python&amp;logoColor=white" alt="Python 3.10 o superior">
   <img src="https://img.shields.io/badge/Jupyter-Notebooks-F37626?style=flat-square&amp;logo=jupyter&amp;logoColor=white" alt="Jupyter Notebooks">
-  <img src="https://img.shields.io/badge/Contenido-11_notebooks-0F766E?style=flat-square" alt="11 notebooks en el catálogo">
+  <img src="https://img.shields.io/badge/Contenido-12_notebooks-0F766E?style=flat-square" alt="12 notebooks en el catálogo">
+  <img src="https://img.shields.io/badge/PyTorch-Series_temporales-EE4C2C?style=flat-square&amp;logo=pytorch&amp;logoColor=white" alt="Series temporales con PyTorch">
   <img src="https://img.shields.io/badge/Idioma-Espa%C3%B1ol-7C3AED?style=flat-square" alt="Contenido en español">
 </p>
 
 <p align="center">
+  <a href="#clase-12">🧠 Explorar la clase 12</a> ·
   <a href="#ruta-de-aprendizaje">Ruta de aprendizaje</a> ·
   <a href="#notebooks">Notebooks</a> ·
   <a href="#inicio-rápido">Inicio rápido</a> ·
@@ -29,6 +31,10 @@
 
 Este repositorio reúne los ejercicios de la materia **Statistics for Data Science**: desde la exploración y limpieza de datos hasta la evaluación de modelos y el análisis de series de tiempo. Cada notebook documenta la carga, la preparación y el análisis de los datos con ejemplos de movilidad, alojamientos, salud y medio ambiente.
 
+| 🔎 Quiero aprender desde cero | 🧠 Quiero comparar modelos | 🚀 Quiero ejecutar el código |
+| :---: | :---: | :---: |
+| Sigue la [ruta de las 12 clases](#ruta-de-aprendizaje). | Explora los [resultados de la clase 12](#clase-12). | Prepara el entorno en [Inicio rápido](#inicio-rápido). |
+
 ## Ruta de aprendizaje
 
 | Etapa | Clases | Lo que se practica |
@@ -37,6 +43,7 @@ Este repositorio reúne los ejercicios de la materia **Statistics for Data Scien
 | 📊 **Medir y comparar** | 3–4 | Métricas de clasificación y regresión, errores y desbalance de clases. |
 | 🌎 **Analizar datos reales** | 5–8 | Calidad del aire, probabilidad, regresión, correlación e influencia. |
 | 📈 **Entender el tiempo** | 9–11 | Estacionariedad, autocorrelación, modelos SARIMA y bases para el pronóstico. |
+| 🧠 **Comparar modelos de pronóstico** | [12](#clase-12) | Regresión AR(13), MLP, LSTM y GRU; validación temporal y variabilidad entre semillas. |
 
 <details>
 <summary><strong>Objetivos del repositorio</strong></summary>
@@ -49,9 +56,111 @@ Este repositorio reúne los ejercicios de la materia **Statistics for Data Scien
 - Ajustar regresiones lineales e interpretar sus coeficientes y diagnósticos.
 - Comparar covarianza y correlación, detectar multicolinealidad y estudiar observaciones influyentes.
 - Explorar autocorrelación, patrones temporales y estacionariedad en series horarias.
+- Transformar series en ventanas de rezagos y comparar modelos lineales y redes neuronales.
+- Separar entrenamiento, validación temporal y prueba; evaluar pronósticos recursivos y ensambles.
 - Documentar supuestos, fuentes de datos y decisiones de limpieza.
 
 </details>
+
+<a id="clase-12"></a>
+
+## 🧠 Clase 12: laboratorio de pronóstico
+
+**¿Una red neuronal siempre pronostica mejor?** La clase 12 compara modelos de scikit-learn y PyTorch sobre la misma serie de pasajeros. Usa los accesos para explorar el código, despliega las gráficas y comprueba tu interpretación con las preguntas del final.
+
+<p align="center">
+  <a href="./Clase%2012-%20Modelado%20de%20series%20temporales%20con%20scikit-learn%20y%20PyTorch.ipynb"><img src="https://img.shields.io/badge/Ver_notebook-Clase_12-0F766E?style=for-the-badge&amp;logo=jupyter&amp;logoColor=white" alt="Ver notebook de la clase 12"></a>
+  <a href="https://colab.research.google.com/github/luis1112enrique/Machine-Learning-Repo/blob/main/Clase%2012-%20Modelado%20de%20series%20temporales%20con%20scikit-learn%20y%20PyTorch.ipynb"><img src="https://img.shields.io/badge/Abrir_en-Colab-F9AB00?style=for-the-badge&amp;logo=googlecolab&amp;logoColor=white" alt="Abrir la clase 12 en Google Colab"></a>
+</p>
+
+| 📅 Serie completa | 🏋️ Entrenamiento | 🎯 Prueba | 🪟 Ventanas |
+| :---: | :---: | :---: | :---: |
+| 144 meses · 1949–1960 | 120 meses · 1949–1958 | 24 meses · 1959–1960 | 94 ejemplos × 13 rezagos |
+
+El dataset `flights` se carga con Seaborn y expresa los valores en **miles de pasajeros**. No necesitas preparar un CSV; la primera descarga requiere conexión a internet.
+
+<details>
+<summary><strong>🧭 Explorar el flujo: del dato al pronóstico</strong></summary>
+
+```mermaid
+flowchart TD
+    A["Separar por fecha: entrenamiento y prueba"] --> B["Log, diferencias, estandarización y 13 rezagos"]
+    B --> C["scikit-learn: lineal y MLP"]
+    B --> D["PyTorch: LSTM y GRU"]
+    C --> E["Pronosticar 24 pasos e invertir transformaciones"]
+    D --> E
+    E --> F["Evaluar RMSE y MAPE en 1959–1960"]
+```
+
+La media y la desviación estándar se calculan con el entrenamiento. Para LSTM y GRU, los años **1956, 1957 y 1958** permiten elegir el número de épocas antes de evaluar 1959–1960.
+
+</details>
+
+### ¿Qué muestran los resultados?
+
+![Comparación de RMSE de la clase 12: la regresión lineal AR(13) obtiene el menor error, 67.6 miles de pasajeros, entre los seis resultados mostrados.](./docs/assets/class12-model-comparison.svg)
+
+> [!NOTE]
+> La gráfica y la tabla reproducen las **salidas guardadas del notebook**, redondeadas a un decimal. No son un nuevo entrenamiento. En esta evaluación, **la regresión lineal AR(13) supera a las LSTM y GRU mostradas**; el resultado corresponde a esta serie y a este periodo.
+
+<details>
+<summary><strong>📊 Abrir la tabla de métricas y cómo leerla</strong></summary>
+
+| Modelo | RMSE ↓ | MAPE ↓ |
+| :--- | ---: | ---: |
+| **Regresión lineal AR(13)** | **67.6** | **13.2%** |
+| Transformación sin aprendizaje | 76.8 | 15.4% |
+| Estacional ingenuo | 77.0 | 15.5% |
+| LSTM · semilla 0 | 84.0 | 16.6% |
+| GRU · ensamble de 10 semillas | 88.0 | 17.4% |
+| LSTM · ensamble de 10 semillas | 90.0 | 17.7% |
+
+- **RMSE:** error en miles de pasajeros; penaliza más los errores grandes.
+- **MAPE:** error porcentual absoluto medio. En ambas métricas, un valor menor indica menor error.
+- **Transformación sin aprendizaje:** predice la media de entrenamiento de la serie transformada y después reconstruye los pasajeros.
+- **Ensambles:** media geométrica de los pronósticos de diez semillas, equivalente a promediar en escala logarítmica.
+
+El notebook también entrena diez MLP y calcula las métricas de su ensamble, pero no imprime esos valores en las salidas guardadas. Por eso no se le asignan cifras en esta tabla. La RNN está disponible como opción de arquitectura, sin una evaluación ejecutada.
+
+</details>
+
+<details>
+<summary><strong>📈 Desplegar los pronósticos frente a los pasajeros observados</strong></summary>
+
+![Pronósticos de 1959–1960: diez ejecuciones LSTM en azul tenue, ensamble LSTM en azul, ensamble MLP en verde, regresión lineal en naranja y observaciones en negro.](./docs/assets/class12-forecast.png)
+
+Gráfica original guardada en la clase 12. Todos los pronósticos parten de diciembre de 1958. Observa los picos estacionales y la separación respecto a los valores reales en negro.
+
+Las líneas tenues muestran diferencias entre semillas de la LSTM: **su dispersión no es un intervalo de predicción**.
+
+</details>
+
+### Comprueba tu intuición
+
+Piensa una respuesta antes de desplegar cada explicación.
+
+<details>
+<summary><strong>💡 ¿Qué modelo elegirías si solo compararas los RMSE mostrados?</strong></summary>
+
+La **regresión lineal AR(13)**: obtiene 67.6, el menor RMSE de la comparación. Una arquitectura más compleja no garantiza menor error fuera de muestra.
+
+</details>
+
+<details>
+<summary><strong>🔁 ¿La validación y la prueba usan el mismo tipo de pronóstico?</strong></summary>
+
+La validación de LSTM y GRU evalúa **un paso adelante**: puede usar las observaciones reales anteriores de cada año de validación. La prueba genera **24 pasos recursivos** desde diciembre de 1958, incorporando cada predicción al historial. Los errores pueden acumularse durante esos 24 pasos.
+
+</details>
+
+<details>
+<summary><strong>🎲 ¿Conviene elegir la semilla con menor error en 1959–1960?</strong></summary>
+
+Usar el periodo de prueba para elegir una semilla sesgaría la evaluación. La comparación de diez semillas permite estudiar la variabilidad; el ensamble combina sus pronósticos y se evalúa después. Tampoco garantiza superar a las referencias.
+
+</details>
+
+[Ver la metodología completa de la clase 12 ↓](#metodologia-clase-12) · [Ir al catálogo ↓](#notebooks)
 
 ## Notebooks
 
@@ -70,8 +179,9 @@ Abre cualquier notebook para consultar el código, las explicaciones y las visua
 | **09** | [Estacionariedad y patrones temporales del ozono en UIZ](<./Clase 9 - Estacionariedad y patrones temporales del ozono en UIZ.ipynb>) | Serie horaria de `O3`: ACF, ADF, KPSS y comparación de transformaciones. |
 | **10** | [Análisis de la serie temporal de CO₂](<./Clase 10 - Análisis de la serie temporal de CO₂ .ipynb>) | CO₂ de Mauna Loa: diferenciación, SARIMA y comparación con AIC, BIC y Ljung–Box. |
 | **11** | [Pronóstico de pasajeros de aerolíneas](<./Clase 11 - Pronósticom de pasajeros de aerolíneas.ipynb>) | Serie mensual de pasajeros: división temporal, pronóstico estacional base, RMSE, MAPE y funciones para ventanas y pronóstico recursivo. |
+| **12** | [Modelado de series temporales con scikit-learn y PyTorch](<./Clase 12- Modelado de series temporales con scikit-learn y PyTorch.ipynb>) | Regresión AR(13), MLP, LSTM y GRU; transformaciones, validación temporal y ensambles de diez semillas. |
 
-> Las Clases **7, 8 y 9** corresponden a los ejercicios **Notebook 1, 2 y 3** de la secuencia de calidad del aire. La Clase **10** trabaja con una serie mensual de CO₂ y la **11** introduce el pronóstico de pasajeros de aerolíneas.
+> Las Clases **7, 8 y 9** corresponden a los ejercicios **Notebook 1, 2 y 3** de la secuencia de calidad del aire. La Clase **10** trabaja con una serie mensual de CO₂, la **11** introduce el pronóstico de pasajeros de aerolíneas y la **12** compara modelos sobre esa misma serie.
 
 ## Inicio rápido
 
@@ -104,8 +214,10 @@ python -m venv .venv
 ```bash
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
-python -m pip install statsmodels
+python -m pip install statsmodels torch
 ```
+
+`statsmodels` se utiliza en las Clases 7–10 y `torch` en la Clase 12. Son dependencias adicionales a las incluidas en `requirements.txt`.
 
 ### 4. Abre los notebooks
 
@@ -123,7 +235,24 @@ jupyter lab
 
 </details>
 
-Abre un notebook del [catálogo](#notebooks) y ejecuta sus celdas **de arriba hacia abajo**. Para seguir la ruta del curso, avanza de la Clase 1 a la 11.
+Abre un notebook del [catálogo](#notebooks) y ejecuta sus celdas **de arriba hacia abajo**. Para seguir la ruta del curso, avanza de la Clase 1 a la 12.
+
+Para entrar directamente al laboratorio de pronóstico:
+
+```bash
+jupyter notebook "Clase 12- Modelado de series temporales con scikit-learn y PyTorch.ipynb"
+```
+
+<details>
+<summary><strong>☁️ Ejecutar la clase 12 en Google Colab</strong></summary>
+
+1. Abre la clase 12 con el botón **Abrir en Colab** de [arriba](#clase-12).
+2. Si falta alguna librería, ejecuta `%pip install numpy pandas matplotlib seaborn scikit-learn torch` en una celda al inicio.
+3. Ejecuta las celdas en orden; Seaborn carga el dataset `flights` sin subir archivos.
+
+El notebook está configurado para CPU y un hilo de PyTorch. El bloque de comparación de LSTM y GRU con diez semillas aparece dos veces y la primera LSTM también se repite; ejecutar todo puede tardar varios minutos.
+
+</details>
 
 > [!TIP]
 > Coloca los CSV necesarios en la raíz del repositorio antes de ejecutar las clases que los utilizan. Consulta [Datos y fuentes](#datos-y-fuentes) para identificar los archivos de cada ejercicio.
@@ -138,9 +267,10 @@ Algunos notebooks descargan información o procesan archivos grandes; su ejecuci
 | **Manipulación de datos** | pandas · Polars · NumPy |
 | **Visualización** | Matplotlib · Seaborn · Plotly · Altair |
 | **Modelado y estadística** | scikit-learn · statsmodels |
+| **Redes neuronales** | MLPRegressor (scikit-learn) · LSTM y GRU (PyTorch) |
 | **Ingesta** | Requests |
 
-Las dependencias base están en [`requirements.txt`](./requirements.txt). Las Clases **7 a 10** también utilizan `statsmodels`, que se instala por separado con el comando incluido en [Inicio rápido](#inicio-rápido).
+Las dependencias base están en [`requirements.txt`](./requirements.txt). Las Clases **7 a 10** también utilizan `statsmodels` y la **12** utiliza `torch`; ambas se instalan con el comando adicional incluido en [Inicio rápido](#inicio-rápido).
 
 ## Datos y fuentes
 
@@ -155,7 +285,7 @@ Los CSV se mantienen fuera del control de versiones mediante [`.gitignore`](./.g
 | 6 | `meteorología_2025.csv`. |
 | 7, 8 y 9 | `contaminantes_2026.csv`. |
 | 10 | Conexión a internet para descargar el CSV mensual de CO₂ de NOAA GML, o una copia local `co2_mm_mlo.csv`. |
-| 11 | Dataset `flights`, cargado mediante `seaborn.load_dataset`; no requiere preparar un CSV local. |
+| 11 y 12 | Dataset `flights`, cargado mediante `seaborn.load_dataset`; no requiere preparar un CSV local. La primera descarga necesita internet. |
 
 <details>
 <summary><strong>Fuentes de datos</strong></summary>
@@ -168,7 +298,7 @@ Los CSV se mantienen fuera del control de versiones mediante [`.gitignore`](./.g
 - **Diabetes:** dataset incluido en `scikit-learn`, usado para métricas de regresión.
 - **Fraude sintético:** dataset generado con `make_classification` de `scikit-learn` para ilustrar el desbalance de clases.
 - **CO₂ de Mauna Loa:** concentraciones mensuales descargadas desde el CSV público de NOAA GML en la Clase 10.
-- **Pasajeros de aerolíneas:** dataset `flights` de Seaborn, con 144 observaciones mensuales de 1949 a 1960, utilizado en la Clase 11.
+- **Pasajeros de aerolíneas:** dataset `flights` de Seaborn, con 144 observaciones mensuales de 1949 a 1960, utilizado en las Clases 11 y 12.
 
 </details>
 
@@ -342,6 +472,32 @@ El contenido actual prepara las herramientas para comparar modelos. `LinearRegre
 
 </details>
 
+<a id="metodologia-clase-12"></a>
+
+<details>
+<summary><strong>Clase 12: modelado con scikit-learn y PyTorch</strong></summary>
+
+El notebook retoma `flights` y completa la comparación de modelos que prepara la Clase 11.
+
+1. Verificación de 144 observaciones y separación cronológica: 120 meses de entrenamiento y 24 de prueba.
+2. Transformación logarítmica y diferencias mensual y estacional de periodo 12: `z[t] = L[t] − L[t−1] − L[t−12] + L[t−13]`.
+3. Estandarización con la media y la desviación del entrenamiento; quedan 107 valores transformados y 94 ventanas de 13 rezagos.
+4. Evaluación de tres referencias: estacional ingenuo, media de la serie transformada y regresión lineal AR(13).
+5. Conversión de la tabla `(94, 13)` a secuencias PyTorch `(94, 13, 1)` y definición de una red recurrente con 16 unidades ocultas y una capa lineal de salida.
+6. Entrenamiento con Adam, tasa `0.001`, weight decay `0.0001`, recorte de gradientes a norma 1 y un máximo de 500 épocas.
+7. Selección de épocas para cada semilla mediante el MSE medio de validación a un paso en 1956, 1957 y 1958. Cada partición calcula su escalamiento únicamente con meses anteriores al año evaluado.
+8. Reajuste con todo el entrenamiento y pronóstico recursivo de 24 meses. Se deshacen la estandarización y las diferencias antes de aplicar la exponencial.
+9. Comparación de LSTM y GRU con semillas 0–9, revisión de su variabilidad y ensambles mediante media geométrica.
+10. Entrenamiento de diez `MLPRegressor` con una capa de 32 unidades ReLU y visualización de su ensamble junto con la regresión lineal, las LSTM y los pasajeros observados.
+
+La LSTM con semilla 0 selecciona **128 épocas** en la ejecución guardada. La regresión lineal registra **RMSE 67.6 y MAPE 13.2%**, menores que los de las redes recurrentes mostradas. El notebook calcula las métricas del ensamble MLP, pero no las imprime; la opción RNN se define sin evaluarse.
+
+La validación a un paso y la prueba recursiva responden a tareas distintas. Las semillas se usan para estudiar la variabilidad, sin elegir la mejor según la prueba. La dispersión de pronósticos no constituye un intervalo de predicción y el ensamble no garantiza una mejora. Los valores pueden variar al reproducir el entrenamiento en otro entorno.
+
+[Volver al laboratorio y sus resultados ↑](#clase-12)
+
+</details>
+
 ## Organización y buenas prácticas
 
 <details>
@@ -360,9 +516,12 @@ El contenido actual prepara las herramientas para comparar modelos. `LinearRegre
 ├── Clase 9 - Estacionariedad y patrones temporales del ozono en UIZ.ipynb
 ├── Clase 10 - Análisis de la serie temporal de CO₂ .ipynb
 ├── Clase 11 - Pronósticom de pasajeros de aerolíneas.ipynb
+├── Clase 12- Modelado de series temporales con scikit-learn y PyTorch.ipynb
 ├── docs/
 │   └── assets/
-│       └── readme-banner.svg
+│       ├── readme-banner.svg
+│       ├── class12-model-comparison.svg
+│       └── class12-forecast.png
 ├── requirements.txt
 ├── .gitignore
 └── README.md
@@ -383,6 +542,8 @@ Los archivos `.csv` no aparecen en la estructura porque se mantienen fuera del c
 - Separar datos crudos, datos limpios y datos listos para modelo cuando el proyecto crezca.
 - Conservar la frecuencia horaria y usar periodos comunes al comparar transformaciones de series de tiempo.
 - Distinguir ajuste dentro de muestra, análisis de sensibilidad y desempeño predictivo fuera de muestra.
+- Calcular transformaciones y escalamiento con entrenamiento, y reservar la prueba para la evaluación final.
+- Comparar redes neuronales con referencias simples y documentar semillas, horizonte y estrategia de validación.
 
 </details>
 
